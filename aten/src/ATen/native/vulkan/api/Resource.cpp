@@ -28,6 +28,8 @@ namespace api {
  */
 VkFormat vk_format(const caffe2::TypeMeta dtype) {
   switch (c10::typeMetaToScalarType(dtype)) {
+    case kLong:
+      return VK_FORMAT_R64G64B64A64_UINT;
     case kFloat:
 #ifdef USE_VULKAN_FP16_INFERENCE
       return VK_FORMAT_R16G16B16A16_SFLOAT;
@@ -50,6 +52,8 @@ VkFormat vk_format(const caffe2::TypeMeta dtype) {
  */
 c10::ScalarType c10_scalartype(const VkFormat image_format) {
   switch (image_format) {
+    case VK_FORMAT_R64G64B64A64_UINT:
+      return c10::kLong;
     case VK_FORMAT_R32G32B32A32_SFLOAT:
       return c10::kFloat;
     case VK_FORMAT_R16G16B16A16_SFLOAT:
