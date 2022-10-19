@@ -13,6 +13,8 @@ namespace ops {
 void memcpy_to_mapping(const Tensor& src, api::MemoryMap& dst_mapping) {
   if (src.dtype() == at::kFloat) {
     memcpy_to_mapping_impl<float>(src, dst_mapping);
+  } else if (src.dtype() == at::kLong) {
+    memcpy_to_mapping_impl<long>(src, dst_mapping);
   } else if (src.dtype() == at::kHalf) {
     memcpy_to_mapping_impl<c10::Half>(src, dst_mapping);
   } else if (src.dtype() == c10::kQUInt8) {
@@ -20,7 +22,7 @@ void memcpy_to_mapping(const Tensor& src, api::MemoryMap& dst_mapping) {
   } else {
     TORCH_CHECK(
         false,
-        "Invalid Data Type: expected c10::QUint8, at::kHalf or at::Float but got ",
+        "Invalid Data Type: expected c10::QUint8, at::kHalf, Long or at::Float but got ",
         src.dtype());
   }
 }
@@ -28,6 +30,8 @@ void memcpy_to_mapping(const Tensor& src, api::MemoryMap& dst_mapping) {
 void memcpy_from_mapping(api::MemoryMap& src_mapping, Tensor& dst) {
   if (dst.dtype() == at::kFloat) {
     memcpy_from_mapping_impl<float>(src_mapping, dst);
+  } else if (dst.dtype() == at::kLong) {
+    memcpy_from_mapping_impl<long>(src_mapping, dst);
   } else if (dst.dtype() == at::kHalf) {
     memcpy_from_mapping_impl<c10::Half>(src_mapping, dst);
   } else if (dst.dtype() == c10::kQUInt8) {
@@ -35,7 +39,7 @@ void memcpy_from_mapping(api::MemoryMap& src_mapping, Tensor& dst) {
   } else {
     TORCH_CHECK(
         false,
-        "Invalid Data Type: expected c10::QUint8, at::kHalf or Float but got ",
+        "Invalid Data Type: expected c10::QUint8, at::kHalf, Long or Float but got ",
         dst.dtype());
   }
 }
