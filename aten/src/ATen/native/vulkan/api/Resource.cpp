@@ -39,7 +39,7 @@ VkFormat vk_format(const caffe2::TypeMeta dtype) {
 
     default:
       TORCH_CHECK(
-          false, "Vulkan vk_format(): no corresponding format for dtype " + toString(c10::typeMetaToScalarType(dtype)));
+          false, "Vulkan vk_format(): no corresponding format for dtype ", toString(c10::typeMetaToScalarType(dtype)));
   }
 }
 
